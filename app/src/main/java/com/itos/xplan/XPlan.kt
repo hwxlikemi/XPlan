@@ -1,6 +1,5 @@
 package com.itos.xplan
 
-import AboutPage
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -89,6 +88,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.itos.xplan.datatype.AppInfo
 import com.itos.xplan.datatype.UninstallMethod
+import com.itos.xplan.ui.Pages.AboutPage
 import com.itos.xplan.ui.Pages.OptPage
 import com.itos.xplan.ui.theme.OriginPlanTheme
 import com.itos.xplan.ui.viewmodel.AppViewModel

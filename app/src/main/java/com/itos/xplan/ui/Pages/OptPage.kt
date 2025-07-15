@@ -33,6 +33,7 @@ import com.itos.xplan.ui.Pages.subassemblies.Opt.HDButton
 import com.itos.xplan.ui.Pages.subassemblies.Opt.OptButton
 import com.itos.xplan.ui.theme.OriginPlanTheme
 import com.itos.xplan.ui.viewmodel.AppViewModel
+import com.itos.xplan.utils.DeviceUtils
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,14 +95,18 @@ fun OptPage(viewModel: AppViewModel?) {
                     viewModel?.let {
                         OptButton(activity, it)
 //                        ProcessLimitButton(it)
-                        AutoBoostBotton()
+                        if (DeviceUtils.isMiuiOrVivo()) {
+                            AutoBoostBotton()
+                        }
                     }
                 }
 
                 Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
                     viewModel?.let {
                         HDButton(it)
-                        ControlSystemUpdateButton(it)
+                        if (DeviceUtils.isMiui()) {
+                            ControlSystemUpdateButton(it)
+                        }
                     }
                 }
             }
@@ -116,10 +121,14 @@ fun OptPage(viewModel: AppViewModel?) {
             ) {
                 if (viewModel != null) {
                     OptButton(activity, viewModel)
-                    AutoBoostBotton()
+                    if (DeviceUtils.isMiuiOrVivo()) {
+                        AutoBoostBotton()
+                    }
 //                    ProcessLimitButton(it)
                     HDButton(viewModel)
-                    ControlSystemUpdateButton(viewModel)
+                    if (DeviceUtils.isMiui()) {
+                        ControlSystemUpdateButton(viewModel)
+                    }
                 }
             }
         }
@@ -132,21 +141,11 @@ fun isLandscape(context: Context): Boolean {
     return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 }
 
-fun getStatusBarHeight(): Int {
-    var result = 0
-    val resourceId: Int = app.resources.getIdentifier("status_bar_height", "dimen", "android")
-    if (resourceId > 0) {
-        result = app.resources.getDimensionPixelSize(resourceId)
-    }
-
-    return result
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun a() {
+fun A() {
     OriginPlanTheme {
         // A surface container using the 'background' color from the theme
         Surface(

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -11,27 +12,23 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.itos.xplan.R
 import com.itos.xplan.datatype.AppInfo
+import com.itos.xplan.datatype.ShizukuResult
 import com.itos.xplan.datatype.UninstallMethod
+import com.itos.xplan.utils.DeviceUtils
+import com.itos.xplan.utils.OData
 import com.itos.xplan.utils.OLog
 import com.itos.xplan.utils.OPackage
 import com.itos.xplan.utils.OShizuku
 import com.itos.xplan.utils.SpUtils
+import com.kongzue.dialogx.dialogs.MessageDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.itos.xplan.datatype.ShizukuResult
-import com.itos.xplan.utils.OData
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import android.provider.Settings
-import com.kongzue.dialogx.dialogs.MessageDialog
-import android.os.Build
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import com.itos.xplan.BuildConfig
 
 /**
  * 应用列表的 ViewModel，负责处理数据加载、应用操作等逻辑。
@@ -297,24 +294,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
 
-            val brand = Build.BRAND.lowercase()
             withContext(Dispatchers.Main) {
-                if (BuildConfig.DEBUG) {
-                    MessageDialog.build()
-                        .setTitle("品牌检测")
-                        .setMessage("当前设备品牌: $brand")
-                        .setOkButton("好") { _, _ -> false }
-                        .show()
-                }
+                DeviceUtils.showBrandInfoIfDebug()
             }
-            val variant = when (brand) {
-                "xiaomi", "redmi", "poco" -> "miui"
-                "vivo", "iqoo" -> "vivo"
-                "oneplus", "oppo" -> "color"
-                "meizu" -> "meizu"
-                "samsung" -> "samsung"
-                else -> brand
-            }
+            val variant = DeviceUtils.getDeviceVariant()
 
             _pkglist.value = allPkgLists[variant] ?: allPkgLists["default"] ?: emptyList()
             _optlist.value = allOptLists[variant] ?: allOptLists["default"] ?: emptyList()

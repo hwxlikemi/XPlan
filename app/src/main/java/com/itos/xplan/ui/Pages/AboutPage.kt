@@ -1,4 +1,9 @@
-import android.content.Context
+package com.itos.xplan.ui.Pages
+
+import DiscussWidget
+import DonateWidget
+import OpenSourceWidget
+import StatusWidget
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
