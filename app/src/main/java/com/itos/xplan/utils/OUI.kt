@@ -3,11 +3,10 @@ package com.itos.xplan.utils
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.provider.Settings
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.itos.xplan.XPlanForHyper.Companion.app
+import com.itos.xplan.XPlan.Companion.app
 import java.io.IOException
 
 

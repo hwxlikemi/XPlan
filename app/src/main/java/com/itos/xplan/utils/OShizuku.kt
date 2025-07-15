@@ -9,7 +9,7 @@ import android.view.InputEvent
 import android.view.KeyEvent
 import android.widget.Toast
 import com.itos.xplan.BuildConfig
-import com.itos.xplan.XPlanForHyper.Companion.app
+import com.itos.xplan.XPlan.Companion.app
 import com.itos.xplan.datatype.ShizukuResult
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku

@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.itos.xplan.XPlanForHyper
+import com.itos.xplan.XPlan
 import com.itos.xplan.ui.viewmodel.AppViewModel
 import com.itos.xplan.utils.OShizuku
 
 @Composable
 fun ControlSystemUpdateButton(viewModel: AppViewModel){
-    val activity = XPlanForHyper.app
+    val activity = XPlan.app
     Row {
         FilledTonalButton(
             modifier = Modifier
@@ -40,7 +40,7 @@ fun ControlSystemUpdateButton(viewModel: AppViewModel){
     }
 }
 
-private fun disableSystemUpdate(activity: XPlanForHyper, viewModel: AppViewModel){
+private fun disableSystemUpdate(activity: XPlan, viewModel: AppViewModel){
     if (activity.b && activity.c) {
         MaterialAlertDialogBuilder(activity)
             .setTitle("禁用系统更新")
@@ -60,7 +60,7 @@ private fun disableSystemUpdate(activity: XPlanForHyper, viewModel: AppViewModel
     }
 }
 
-private fun enableSystemUpdate(activity: XPlanForHyper, viewModel: AppViewModel){
+private fun enableSystemUpdate(activity: XPlan, viewModel: AppViewModel){
     if (activity.b && activity.c) {
         viewModel.reinstallPackageByName("com.android.updater")
         MaterialAlertDialogBuilder(activity)

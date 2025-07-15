@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.itos.xplan.XPlanForHyper
+import com.itos.xplan.XPlan
 import com.itos.xplan.utils.OShizuku
 
 @Composable
 fun AutoBoostBotton(){
-    val activity = XPlanForHyper.app
+    val activity = XPlan.app
     Row {
         FilledTonalButton(
             modifier = Modifier
@@ -39,7 +39,7 @@ fun AutoBoostBotton(){
     }
 }
 
-fun boost (activity: XPlanForHyper){
+fun boost (activity: XPlan){
     if (activity.b && activity.c) {
         MaterialAlertDialogBuilder(activity)
             .setTitle("一键狂暴")
@@ -61,7 +61,7 @@ fun boost (activity: XPlanForHyper){
         OShizuku.checkShizuku()
     }
 }
-fun restore(activity: XPlanForHyper) {
+fun restore(activity: XPlan) {
     if (activity.b && activity.c) {
         OShizuku.setAppDisabled("com.xiaomi.joyose",false)
         OShizuku.setAppDisabled("com.miui.powerkeeper", false)

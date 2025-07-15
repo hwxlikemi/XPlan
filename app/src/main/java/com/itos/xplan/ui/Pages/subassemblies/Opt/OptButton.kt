@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.itos.xplan.XPlanForHyper
+import com.itos.xplan.XPlan
 import com.itos.xplan.ui.viewmodel.AppViewModel
 import com.itos.xplan.utils.OShizuku
 
 @Composable
-fun OptButton(activity: XPlanForHyper, viewModel: AppViewModel){
+fun OptButton(activity: XPlan, viewModel: AppViewModel){
     Row {
         FilledTonalButton(
             modifier = Modifier
@@ -38,7 +38,7 @@ fun OptButton(activity: XPlanForHyper, viewModel: AppViewModel){
     }
 }
 
-fun opt_setappstauts(activity: XPlanForHyper, viewModel: AppViewModel, status: Boolean) {
+fun opt_setappstauts(activity: XPlan, viewModel: AppViewModel, status: Boolean) {
     if (activity.b && activity.c) {
         viewModel.refreshAppList()
         // 遍历app list

@@ -115,7 +115,7 @@ import rikka.shizuku.Shizuku.OnBinderReceivedListener
 
 // TODO 拆Details页面
 
-class XPlanForHyper : AppCompatActivity() {
+class XPlan : AppCompatActivity() {
     val context: Context = this
     var b = true
     var c = false
@@ -232,7 +232,7 @@ class XPlanForHyper : AppCompatActivity() {
                 val log = jsonObject.getString("log")
                 val isShowNotice = jsonObject.getBoolean("isShowNotice")
                 val notice = jsonObject.getString("notice")
-                this@XPlanForHyper.notice = notice
+                this@XPlan.notice = notice
                 OLog.i(
                     "更新",
                     update + "\n" + version + "\n" + url + "\n" + version_name + "\n" + log + "\n" + isShowNotice + "\n" + notice
@@ -757,14 +757,14 @@ class XPlanForHyper : AppCompatActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                Text("XPlanForHyper Preview")
+                Text("XPlan Preview")
             }
         }
     }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var app: XPlanForHyper private set
+        lateinit var app: XPlan private set
     }
 }
 

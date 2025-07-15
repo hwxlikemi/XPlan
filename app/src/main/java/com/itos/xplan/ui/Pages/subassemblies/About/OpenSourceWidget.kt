@@ -7,7 +7,7 @@ import androidx.compose.ui.res.vectorResource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.itos.xplan.R
-import com.itos.xplan.XPlanForHyper.Companion.app
+import com.itos.xplan.XPlan.Companion.app
 import com.itos.xplan.datatype.OriginCardItem
 import com.itos.xplan.utils.OUI
 
@@ -34,7 +34,7 @@ fun OpenSourceWidget() {
 
             label = "Github",
             onClick = {
-                OUI.openLink("https://github.com/ItosEO/XPlanForHyper")
+                OUI.openLink("https://github.com/ItosEO/XPlan")
             }
         ),
         OriginCardItem(

@@ -25,8 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.itos.xplan.XPlanForHyper
-import com.itos.xplan.XPlanForHyper.Companion.app
+import com.itos.xplan.XPlan
+import com.itos.xplan.XPlan.Companion.app
 import com.itos.xplan.ui.Pages.subassemblies.Opt.AutoBoostBotton
 import com.itos.xplan.ui.Pages.subassemblies.Opt.ControlSystemUpdateButton
 import com.itos.xplan.ui.Pages.subassemblies.Opt.HDButton
@@ -38,7 +38,7 @@ import com.itos.xplan.ui.viewmodel.AppViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OptPage(viewModel: AppViewModel?) {
-    val activity = XPlanForHyper.app
+    val activity = XPlan.app
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .statusBarsPadding(),

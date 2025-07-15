@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.itos.xplan.BuildConfig
 import com.itos.xplan.R
-import com.itos.xplan.XPlanForHyper.Companion.app
 
 @Composable
 fun StatusWidget() {
