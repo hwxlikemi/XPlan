@@ -1,69 +1,43 @@
-name: Android CI
+name: Build Android APK
 
 on:
   push:
-    tags:
-      - "v*"     # 推送 tag（例如 v1.0.0）时触发
-  workflow_dispatch:   # 允许手动触发
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 拉取代码
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # 2. 设置 JDK（XPlan 用 Java 17）
-      - name: Set up JDK
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
+          cache: gradle
 
-      # 3. 缓存 Gradle 依赖（加快构建）
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # 4. 赋予 Gradle 执行权限
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      # 5. 修复 gradle.properties 里不兼容的 JVM 参数
       - name: Fix JVM args for Java 17
         run: |
-          if [ -f gradle.properties ]; then
-            sed -i 's/-XX:MaxPermSize=512m//g' gradle.properties
-          fi
+          # 删除所有 gradle.properties 中的 MaxPermSize 参数
+          grep -rl --include=gradle.properties "MaxPermSize" . | xargs -r sed -i 's/-XX:MaxPermSize=512m//g'
+          # 写入新的 JVM 参数
+          echo "org.gradle.jvmargs=-Xmx2g -Dfile.encoding=UTF-8" > gradle.properties
+          # 禁用 Daemon 避免继承错误参数
+          echo "org.gradle.daemon=false" >> gradle.properties
 
-      # 6. 安装必要的系统库（避免 NativeServices 初始化失败）
-      - name: Install required system libs
-        run: sudo apt-get update && sudo apt-get install -y libc6 libstdc++6 zlib1g
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-      # 7. 构建 Debug APK（改 assembleRelease 可打正式包）
-      - name: Build APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease --stacktrace
 
-      # 8. 上传 APK 作为 GitHub Actions 的构建产物
-      - name: Upload APK as artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
         with:
-          name: XPlan-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-      # 9. （可选）发布到 GitHub Release（只有推送 tag 时执行）
-      - name: Upload to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: app/build/outputs/apk/debug/app-debug.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: release-apk
+          path: app/build/outputs/apk/release/*.apk
