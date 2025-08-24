@@ -23,9 +23,10 @@ object DeviceUtils {
     fun showBrandInfoIfDebug() {
         if (BuildConfig.DEBUG) {
             val brand = getBrand()
+            val brand2 = getDeviceVariant()
             MessageDialog.build()
                 .setTitle("品牌检测")
-                .setMessage("当前设备品牌: $brand")
+                .setMessage("当前设备品牌: $brand \n最终名称: $brand2")
                 .setOkButton("好") { _, _ -> false }
                 .show()
         }

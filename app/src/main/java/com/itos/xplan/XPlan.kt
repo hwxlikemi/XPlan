@@ -575,7 +575,7 @@ class XPlan : AppCompatActivity() {
         }
         
         Column {
-            TopAppBar(title = { Text(text = "XHyper") },
+            TopAppBar(title = { Text(text = "XPlan") },
                 actions = {
                     IconButton(onClick = {
                         val inputEditText = EditText(context)
