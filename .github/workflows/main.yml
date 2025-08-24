@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. 设置 JDK 环境（XPlan 用 Java 17）
+      # 2. 设置 JDK（XPlan 使用 Java 17）
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -26,18 +26,25 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 4. 构建 Debug APK（如果要 Release，就改 assembleRelease）
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      # 4. 修复 gradle.properties 里不兼容的 JVM 参数
+      - name: Fix JVM args for Java 17
+        run: |
+          if [ -f gradle.properties ]; then
+            sed -i 's/-XX:MaxPermSize=512m//g' gradle.properties
+          fi
 
-      # 5. 上传 APK 作为 GitHub Actions 的构建产物（方便下载）
+      # 5. 构建 Debug APK（改 assembleRelease 可打正式包）
+      - name: Build APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      # 6. 上传 APK 作为 GitHub Actions 的构建产物
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
           name: XPlan-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # 6. （可选）发布到 GitHub Release（只有推送 tag 时执行）
+      # 7. （可选）发布到 GitHub Release（只有推送 tag 时执行）
       - name: Upload to GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
